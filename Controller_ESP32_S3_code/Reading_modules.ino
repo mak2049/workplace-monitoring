@@ -1,10 +1,10 @@
 
 
 void Read_sensors(){
-Read_DS3231();
 Read_SCD30();
 Read_BME280();
 Read_TSL2591();
+Read_DS3231();
 }
 
 void Read_DS3231() {// Чтение показаний с модуля часов реального времени

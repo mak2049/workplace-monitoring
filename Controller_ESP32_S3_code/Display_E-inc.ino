@@ -90,7 +90,7 @@ void Disp1_refresh() {
   drawString(145 - spix, 9, "CO");
   u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
   drawString(172 - spix, 9, "2");
-  display.drawRect(0, 0, 190 - spix, 38, GxEPD_RED);
+  display.drawRect(0, 0, 188 - spix, 38, GxEPD_RED);
   //----------------------------------------------------
 
   //Вывод на дисплей показателей температуры
@@ -187,22 +187,100 @@ void Disp1_refresh() {
   //Вывод на дисплей показателей давления и высоты
   u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
   u8g2Fonts.setForegroundColor(GxEPD_BLACK);
-  drawString(2, 103, "Pres:");
-  drawString(4, 117, "  Alt:");
-  display.drawRect(0, 99, 190 - spix, 29, GxEPD_RED);
+  drawString(2, 104, "Pres:");
+  drawString(4, 116, "  Alt:");
+  char out7[10];
+  char out8[10];
+  dtostrf(Press, 6, 1, out7);
+  dtostrf(Alt, 6, 1, out8);
+  drawString(30, 104, out7);
+  drawString(30, 116, out8);
+  drawString(71, 104, "hPa");
+  drawString(71, 116, "m");
+  dtostrf(Press * 0.750063755, 3, 0, out7);
+  drawString(94, 104, ",");
+  drawString(98, 104, out7);
+  drawString(120, 104, "mmHg");
+  display.drawRect(0, 99, 157, 29, GxEPD_RED);
+  //--------------------------------------
+
+  //Верхний хот бар
+  u8g2Fonts.setFont(u8g2_font_battery19_tn);  // 19 px battery
+  u8g2Fonts.setForegroundColor(GxEPD_BLACK);
+
+  if (batt >= 90) {
+    drawString(286, 13, "5");
+  }
+  if (batt < 90 && batt >= 80) {
+    drawString(286, 13, "4");
+  }
+  if (batt < 80 && batt >= 60) {
+    drawString(286, 13, "3");
+  }
+  if (batt < 60 && batt >= 40) {
+    drawString(286, 13, "2");
+  }
+  if (batt < 40 && batt >= 20) {
+    drawString(286, 13, "1");
+  }
+  if (batt < 20 && batt >= 0) {
+    drawString(286, 13, "0");
+  }
+  u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9 px battery
+  char out9[4];
+  dtostrf(batt, 3, 0, out9);
+  u8g2Fonts.setFontDirection(1);
+  drawString(275, -10, out9);
+  u8g2Fonts.setFontDirection(0);
+
+  display.drawBitmap(260, 2, wi_fi_100small, wi_fi_100small_widht, wi_fi_100small_height, GxEPD_BLACK);  //вайфай
+  u8g2Fonts.setFont(u8g2_font_crox4h_tf);  // 14 px                                               // 21px
+  u8g2Fonts.setForegroundColor(GxEPD_BLACK);
+  drawString(210, 10, ":");
+  drawString(235, 10, ":");
+  char out10[2];
+  dtostrf(hour, 2, 0, out10);
+  if (hour < 10) {
+    out10[0] = '0';
+  }
+  drawString(190, 11, out10);
+
+  dtostrf(minute, 2, 0, out10);
+  if (minute < 10) {
+    out10[0] = '0';
+  }
+  drawString(215, 11, out10);
+
+  dtostrf(second, 2, 0, out10);
+  if (second < 10) {
+    out10[0] = '0';
+  }
+  drawString(240, 11, out10);
+
+  u8g2Fonts.setFont(u8g2_font_crox3tb_tf);  // 11 px                                               // 21px
+  u8g2Fonts.setForegroundColor(GxEPD_BLACK);
+  drawString(231, 26, ":");
+  drawString(254, 26, ":");
+  dtostrf(day, 2, 0, out10);
+  if (day < 10) {
+    out10[0] = '0';
+  }
+  drawString(212, 27, out10);
+
+  dtostrf(month, 2, 0, out10);
+  if (month < 10) {
+    out10[0] = '0';
+  }
+  drawString(235, 27, out10);
+  char out11[4];
+  dtostrf(year, 4, 0, out11);
+  drawString(258, 27, out11);
+
+  display.drawRect(188, 0, 108, 38, GxEPD_RED);
   //--------------------------------------
 
   // Полный рефреш для RBW
-  display.display(false);  
+  display.display(false);
   // Усыпление
   display.hibernate();
 }
-
-// void Ugar(){
-//   display.fillScreen(GxEPD_WHITE);
-//   display.drawBitmap(0, 0, image, 296, 128, GxEPD_RED);
-//   // Полный рефреш для RBW
-//   display.display(false);
-//   // Усыпление
-//   display.hibernate();
-// }

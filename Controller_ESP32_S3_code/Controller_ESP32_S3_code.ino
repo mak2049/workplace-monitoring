@@ -1,3 +1,25 @@
+/*
+Настройки использованной платы ESP32S3 Dev Module 
+USB CDC On Boot:"Disabled"
+CPU Frequency: "240MHz (WiFi)"
+Core Debug Level: "None"
+USB DFU On Boot: "Enabled (Requires USB-OTG Mode)"
+Erase All Flash Before Sketch Upload: "Disabled"
+Events Run On: "Core 1"
+Flash Mode: "QIO 80MHz"
+Flash Size: "16MB (128Mb)"
+JTAG Adapter: "Disabled"
+Arduino Runs On: "Core 1"
+USB Firmware MSC On Boot: "Disabled"
+Partition Scheme: "16M Flash (2MB APP/12.5MB FATFS)"
+PSRAM: "OPI PSRAM"
+Upload Mode: "UARTO / Hardware CDC"
+Upload Speed: "921600"
+USB Mode: "Hardware CDC and JTAG"
+Zigbee Mode: "Disabled"
+
+*/
+
 #include <SPI.h>
 #include <Wire.h>
 #include "SparkFun_SCD30_Arduino_Library.h"  // Датчик углекислого газа SCD-30
@@ -46,6 +68,7 @@ GxEPD2_3C<GxEPD2_290_C90c, GxEPD2_290_C90c::HEIGHT> display(GxEPD2_290_C90c(EPD_
 U8G2_FOR_ADAFRUIT_GFX u8g2Fonts;                                                                                  // Select u8g2 font from here: https://github.com/olikraus/u8g2/wiki/fntlistall
 
 // Переменные хранящие значения с модулей
+byte batt = 100; // %
 // DS3231
 int year;
 byte month;
