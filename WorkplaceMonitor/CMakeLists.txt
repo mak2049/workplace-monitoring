@@ -14,7 +14,7 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 # --- OpenCV ---
-set(OpenCV_DIR "C:/Qt/my_project/WorkplaceMonitor/OpenCV-MinGW-Build-OpenCV-4.5.5-x64")  # ѕ–ќ¬≈–№, что путь точно существует!
+set(OpenCV_DIR "C:/Qt/OpenCV-MinGW-Build-OpenCV-4.5.5-x64")  # ѕ–ќ¬≈–№, что путь точно существует!
 find_package(OpenCV REQUIRED)
 
 add_executable(WorkplaceMonitor
