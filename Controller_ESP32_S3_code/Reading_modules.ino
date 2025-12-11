@@ -5,6 +5,37 @@ Read_SCD30();
 Read_BME280();
 Read_TSL2591();
 Read_DS3231();
+if(day_mm != day){
+day_mm = day;
+CO2_min = CO2;
+CO2_max = CO2;
+Temp_BME280_min = Temp_BME280;
+Temp_BME280_max = Temp_BME280;
+RH_BME280_min = RH_BME280;
+RH_BME280_max = RH_BME280;
+}
+
+
+if(CO2_min > CO2){
+CO2_min = CO2;
+}
+if(Temp_BME280_min > Temp_BME280){
+Temp_BME280_min = Temp_BME280;
+}
+if(RH_BME280_min > RH_BME280){
+RH_BME280_min = RH_BME280;
+}
+if(CO2_max < CO2){
+CO2_max = CO2;
+}
+if(Temp_BME280_max < Temp_BME280){
+Temp_BME280_max = Temp_BME280;
+}
+if(RH_BME280_max < RH_BME280){
+RH_BME280_max = RH_BME280;
+}
+
+
 }
 
 void Read_DS3231() {// Чтение показаний с модуля часов реального времени

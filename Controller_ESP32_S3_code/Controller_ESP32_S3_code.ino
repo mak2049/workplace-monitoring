@@ -1,22 +1,22 @@
 /*
 Настройки использованной платы ESP32S3 Dev Module 
-USB CDC On Boot:"Disabled"
-CPU Frequency: "240MHz (WiFi)"
-Core Debug Level: "None"
-USB DFU On Boot: "Enabled (Requires USB-OTG Mode)"
-Erase All Flash Before Sketch Upload: "Disabled"
-Events Run On: "Core 1"
-Flash Mode: "QIO 80MHz"
-Flash Size: "16MB (128Mb)"
-JTAG Adapter: "Disabled"
-Arduino Runs On: "Core 1"
-USB Firmware MSC On Boot: "Disabled"
-Partition Scheme: "16M Flash (2MB APP/12.5MB FATFS)"
-PSRAM: "OPI PSRAM"
-Upload Mode: "UARTO / Hardware CDC"
-Upload Speed: "921600"
-USB Mode: "Hardware CDC and JTAG"
-Zigbee Mode: "Disabled"
+                                                                             USB CDC On Boot:"Disabled"
+                                                                             CPU Frequency: "240MHz (WiFi)"
+                                                                             Core Debug Level: "None"
+                                                                             USB DFU On Boot: "Enabled (Requires USB-OTG Mode)"
+                                                                             Erase All Flash Before Sketch Upload: "Disabled"
+                                                                             Events Run On: "Core 1"
+                                                                             Flash Mode: "QIO 80MHz"
+                                                                             Flash Size: "16MB (128Mb)"
+                                                                             JTAG Adapter: "Disabled"
+                                                                             Arduino Runs On: "Core 1"
+                                                                             USB Firmware MSC On Boot: "Disabled"
+                                                                             Partition Scheme: "16M Flash (2MB APP/12.5MB FATFS)"
+                                                                             PSRAM: "OPI PSRAM"
+                                                                             Upload Mode: "UARTO / Hardware CDC"
+                                                                             Upload Speed: "921600"
+                                                                             USB Mode: "Hardware CDC and JTAG"
+                                                                             Zigbee Mode: "Disabled"
 
 */
 //Удалить эту строчку если нашли её (для теста)
@@ -87,6 +87,17 @@ float RH_BME280;    // (%)
 float Alt;          // (m)
 // TSL2591
 float lux;  // (Lux)
+//Минимальное и максимальное значение за сутки 
+ byte day_mm = 100;
+unsigned int CO2_min;// (ppm)
+unsigned int CO2_max;// (ppm)
+float Temp_BME280_min;  // (°C)
+float Temp_BME280_max;  // (°C)
+float RH_BME280_min;    // (%)
+float RH_BME280_max;    // (%)
+//Для графика 
+int disp_T = 0; 
+int Temp_Data[104];
 //переменные для работы
 unsigned long tm1 = 18000;
 
