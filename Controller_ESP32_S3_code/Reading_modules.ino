@@ -1,44 +1,42 @@
 
 
-void Read_sensors(){
-Read_SCD30();
-Read_BME280();
-Read_TSL2591();
-Read_DS3231();
-if(day_mm != day){
-day_mm = day;
-CO2_min = CO2;
-CO2_max = CO2;
-Temp_BME280_min = Temp_BME280;
-Temp_BME280_max = Temp_BME280;
-RH_BME280_min = RH_BME280;
-RH_BME280_max = RH_BME280;
-}
+void Read_sensors() {
+  Read_SCD30();
+  Read_BME280();
+  Read_TSL2591();
+  Read_DS3231();
+  if (day_mm != day && airSensor.dataAvailable()) {
+    day_mm = day;
+    CO2_min = CO2;
+    CO2_max = CO2;
+    Temp_BME280_min = Temp_BME280;
+    Temp_BME280_max = Temp_BME280;
+    RH_BME280_min = RH_BME280;
+    RH_BME280_max = RH_BME280;
+  }
 
 
-if(CO2_min > CO2){
-CO2_min = CO2;
-}
-if(Temp_BME280_min > Temp_BME280){
-Temp_BME280_min = Temp_BME280;
-}
-if(RH_BME280_min > RH_BME280){
-RH_BME280_min = RH_BME280;
-}
-if(CO2_max < CO2){
-CO2_max = CO2;
-}
-if(Temp_BME280_max < Temp_BME280){
-Temp_BME280_max = Temp_BME280;
-}
-if(RH_BME280_max < RH_BME280){
-RH_BME280_max = RH_BME280;
-}
-
-
+  if (CO2_min > CO2) {
+    CO2_min = CO2;
+  }
+  if (Temp_BME280_min > Temp_BME280) {
+    Temp_BME280_min = Temp_BME280;
+  }
+  if (RH_BME280_min > RH_BME280) {
+    RH_BME280_min = RH_BME280;
+  }
+  if (CO2_max < CO2) {
+    CO2_max = CO2;
+  }
+  if (Temp_BME280_max < Temp_BME280) {
+    Temp_BME280_max = Temp_BME280;
+  }
+  if (RH_BME280_max < RH_BME280) {
+    RH_BME280_max = RH_BME280;
+  }
 }
 
-void Read_DS3231() {// Чтение показаний с модуля часов реального времени
+void Read_DS3231() {  // Чтение показаний с модуля часов реального времени
   DateTime now = rtc.now();
   year = now.year();
   month = now.month();
@@ -48,7 +46,7 @@ void Read_DS3231() {// Чтение показаний с модуля часо�
   second = now.second();
 }
 
-void Read_SCD30() {// Чтение показаний с датчика углекислого газа 
+void Read_SCD30() {  // Чтение показаний с датчика углекислого газа
   if (airSensor.dataAvailable()) {
     CO2 = airSensor.getCO2();
     Temp_SCD30 = airSensor.getTemperature();
@@ -56,14 +54,14 @@ void Read_SCD30() {// Чтение показаний с датчика угле
   }
 }
 
-void Read_BME280() {// Чтение показаний с датчика давления влажности и температуры
+void Read_BME280() {  // Чтение показаний с датчика давления влажности и температуры
   Press = bme.readPressure() / 100.0;
   Temp_BME280 = bme.readTemperature();
   RH_BME280 = bme.readHumidity();
   Alt = bme.readAltitude(1013.25);  // 1013.25 — стандартное давление на уровне моря
 }
 
-void Read_TSL2591() { // Чтение показаний с датчика освещённости 
+void Read_TSL2591() {  // Чтение показаний с датчика освещённости
   float lux1;
   tsl.setGain(TSL2591_GAIN_LOW);                 // чувствительность = 1
   tsl.setTiming(TSL2591_INTEGRATIONTIME_600MS);  // Время интеграции 600 мс
