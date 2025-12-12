@@ -1,1 +1,53 @@
-build
+# Build directories
+build/
+*/build/
+build-*/
+
+# CMake cache and files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+install_manifest.txt
+
+# Qt Creator specific
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.qtcreator*
+*.autosave
+
+# Qt Creator CMake
+CMakeLists.txt.user
+CMakeLists.txt.user.*
+
+# Compiled object files
+*.o
+*.obj
+*.lo
+*.la
+*.lai
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+
+# Logs
+*.log
+
+# Other temp files
+*.tmp
+*.cache
+
+# VS Code (если используете)
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+

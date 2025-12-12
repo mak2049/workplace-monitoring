@@ -1,5 +1,0 @@
-C:/Qt/my_project/WorkplaceMonitor/build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug/CMakeFiles/WorkplaceMonitor.dir
-C:/Qt/my_project/WorkplaceMonitor/build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Qt/my_project/WorkplaceMonitor/build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/Qt/my_project/WorkplaceMonitor/build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug/CMakeFiles/WorkplaceMonitor_autogen_timestamp_deps.dir
-C:/Qt/my_project/WorkplaceMonitor/build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug/CMakeFiles/WorkplaceMonitor_autogen.dir
