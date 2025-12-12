@@ -72,3 +72,4 @@ qrc_*.cpp
 # OS-specific files
 .DS_Store
 Thumbs.db
+WorkplaceMonitor/.qtcreator/CMakeLists.txt.user
