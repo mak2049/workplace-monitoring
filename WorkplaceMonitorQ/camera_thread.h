@@ -3,8 +3,7 @@
 
 #include <QThread>
 #include <QImage>
-#include <atomic>
-
+#include <QElapsedTimer>
 #include <opencv2/opencv.hpp>
 
 class CameraThread : public QThread
@@ -13,19 +12,30 @@ class CameraThread : public QThread
 
 public:
     explicit CameraThread(QObject *parent = nullptr);
-    ~CameraThread();
-
     void stop();
+    void calibrate();
 
 signals:
-    void frameReady(const QImage &image);
+    void frameProcessed(const QImage &image, bool postureBad);
 
 protected:
     void run() override;
 
 private:
-    std::atomic<bool> running;
-    cv::VideoCapture cap;
+    bool running = true;
+    bool calibrated = false;
+
+    cv::Point2f headSmooth;
+    cv::Point2f shoulderSmooth;
+
+    double referenceDistance = 0.0;
+    double smoothDistance = 0.0;
+
+    const double alpha = 0.2;          // сглаживание
+    const double postureThreshold = 0.85;
+
+    QElapsedTimer calibrationTimer;
+    bool showCalibrationMessage = false;
 };
 
-#endif // CAMERA_THREAD_H
+#endif
