@@ -91,26 +91,16 @@ float RH_BME280;    // (%)
 float Alt;          // (m)
 // TSL2591
 float lux;  // (Lux)
-            //Минимальное и максимальное значение за сутки
-byte day_mm = 100;
-unsigned int CO2_min;   // (ppm)
-unsigned int CO2_max;   // (ppm)
-float Temp_BME280_min;  // (°C)
-float Temp_BME280_max;  // (°C)
-float RH_BME280_min;    // (%)
-float RH_BME280_max;    // (%)
-//Для графика
-int disp_T = 0;
-int Temp_Data[104];
+
 //переменные для работы
-unsigned long tm1 = 18000;
+unsigned long tm1 = 18000; // задержка старта отображения.
 
 
 
 void loop() {
 
   if (tm1 <= millis()) {
-    tm1 = millis() + 121000;
+    tm1 = millis() + 60000;
     Read_sensors();
     Disp1_refresh();
 

@@ -14,13 +14,8 @@ DB_KEYS(
 void WiFI_TIC(void* pvParameters) {
   WiFi.mode(WIFI_AP_STA);
   sett.begin();
+  sett.setVersion("0.04.19.12.25"); // Отображение версии прошивки
   sett.onBuild(build);
-  // базу данных запускаем до подключения к точке
-#ifdef ESP32
-  LittleFS.begin(true);
-#else
-  LittleFS.begin();
-#endif
   db.begin();
   db.init(kk::wifi_ssid, "");
   db.init(kk::wifi_pass, "");

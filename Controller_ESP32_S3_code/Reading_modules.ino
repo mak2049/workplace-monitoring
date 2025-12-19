@@ -5,35 +5,40 @@ void Read_sensors() {
   Read_BME280();
   Read_TSL2591();
   Read_DS3231();
-  if (day_mm != day && CO2 != 0) {
-    day_mm = day;
-    CO2_min = CO2;
-    CO2_max = CO2;
-    Temp_BME280_min = Temp_BME280;
-    Temp_BME280_max = Temp_BME280;
-    RH_BME280_min = RH_BME280;
-    RH_BME280_max = RH_BME280;
+  if (dbS["day_mm"] != day && CO2 != 0) {
+    dbS["day_mm"] = day;
+    dbS["CO2_min"] = CO2;
+    dbS["CO2_max"] = CO2;
+    dbS["Temp_BME280_min"] = Temp_BME280;
+    dbS["Temp_BME280_max"] = Temp_BME280;
+    dbS["RH_BME280_min"] = RH_BME280;
+    dbS["RH_BME280_max"] = RH_BME280;
   }
 
 
-  if (CO2_min > CO2) {
-    CO2_min = CO2;
+  if (dbS["CO2_min"] > CO2 && CO2 != 0 ) {
+    dbS["CO2_min"] = CO2;
   }
-  if (Temp_BME280_min > Temp_BME280) {
-    Temp_BME280_min = Temp_BME280;
+  if (dbS["Temp_BME280_min"] > Temp_BME280) {
+    dbS["Temp_BME280_min"] = Temp_BME280;
   }
-  if (RH_BME280_min > RH_BME280) {
-    RH_BME280_min = RH_BME280;
+  if (dbS["RH_BME280_min"] > RH_BME280) {
+    dbS["RH_BME280_min"] = RH_BME280;
   }
-  if (CO2_max < CO2) {
-    CO2_max = CO2;
+  if (dbS["CO2_max"] < CO2 && CO2 != 0) {
+    dbS["CO2_max"] = CO2;
   }
-  if (Temp_BME280_max < Temp_BME280) {
-    Temp_BME280_max = Temp_BME280;
+  if (dbS["Temp_BME280_max"] < Temp_BME280) {
+    dbS["Temp_BME280_max"] = Temp_BME280;
   }
-  if (RH_BME280_max < RH_BME280) {
-    RH_BME280_max = RH_BME280;
+  if (dbS["RH_BME280_max"] < RH_BME280) {
+    dbS["RH_BME280_max"] = RH_BME280;
   }
+
+  if (CO2 != 0) {
+    dbS["CO2db"] = CO2;
+  }
+  dbS.update();
 }
 
 void Read_DS3231() {  // Чтение показаний с модуля часов реального времени

@@ -305,72 +305,28 @@ void Disp1_refresh() {
   // Мин и макс значения и график через раз
   int x0 = 158;
   int y0 = 69;
-  if (disp_T == 0) {
-    disp_T = 1;
 
-    u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
-    u8g2Fonts.setForegroundColor(GxEPD_BLACK);
-    drawString(x0 + 2, y0 + 20, "max:");
-    drawString(x0 + 2, y0 + 35, "min:");
-    drawString(x0 + 30, y0 + 5, "ppm");
-    drawString(x0 + 73, y0 + 5, "°C");
-    drawString(x0 + 110, y0 + 5, "%");
-    char out13[10];
-    dtostrf(CO2_min, 5, 0, out13);
-    drawString(x0 + 30, y0 + 35, out13);
-    dtostrf(CO2_max, 5, 0, out13);
-    drawString(x0 + 30, y0 + 20, out13);
-    dtostrf(Temp_BME280_min, 5, 1, out13);
-    drawString(x0 + 73, y0 + 35, out13);
-    dtostrf(Temp_BME280_max, 5, 1, out13);
-    drawString(x0 + 73, y0 + 20, out13);
-    dtostrf(RH_BME280_min, 4, 1, out13);
-    drawString(x0 + 110, y0 + 35, out13);
-    dtostrf(RH_BME280_max, 4, 1, out13);
-    drawString(x0 + 110, y0 + 20, out13);
-  } else {
-    disp_T = 0;
 
-    u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
-    u8g2Fonts.setForegroundColor(GxEPD_BLACK);
-    drawString(x0 + 2, y0 + 20, "max:");
-    drawString(x0 + 2, y0 + 35, "min:");
-    drawString(x0 + 30, y0 + 5, "ppm");
-    drawString(x0 + 73, y0 + 5, "°C");
-    drawString(x0 + 110, y0 + 5, "%");
-    char out13[10];
-    dtostrf(CO2_min, 5, 0, out13);
-    drawString(x0 + 30, y0 + 35, out13);
-    dtostrf(CO2_max, 5, 0, out13);
-    drawString(x0 + 30, y0 + 20, out13);
-    dtostrf(Temp_BME280_min, 5, 1, out13);
-    drawString(x0 + 73, y0 + 35, out13);
-    dtostrf(Temp_BME280_max, 5, 1, out13);
-    drawString(x0 + 73, y0 + 20, out13);
-    dtostrf(RH_BME280_min, 4, 1, out13);
-    drawString(x0 + 110, y0 + 35, out13);
-    dtostrf(RH_BME280_max, 4, 1, out13);
-    drawString(x0 + 110, y0 + 20, out13);
-    // u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
-    // u8g2Fonts.setForegroundColor(GxEPD_BLACK);
-    // drawString(x0 + 2, y0 + 3, "ppm");
-    // drawString(x0 + 110, y0 + 49, "hour");
-    // u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
-    // u8g2Fonts.setForegroundColor(GxEPD_BLACK);
-    // drawString(x0 + 2, y0 + 15, "6000");
-    // drawString(x0 + 2, y0 + 30, "3200");
-    // drawString(x0 + 2, y0 + 45, "400");
-    // u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
-    // u8g2Fonts.setForegroundColor(GxEPD_BLACK);
-    // drawString(x0 + 25, y0 + 49, "1");
-    // drawString(x0 + 55, y0 + 49, "3");
-    // drawString(x0 + 95, y0 + 49, "6");
-    // for (int i; i < 104; i++) {
-    //   display.point(x0 + 30 + i, y0 + 15 + 32 - map(Temp_Data[i], 300, 6000, y0 + 15 + 32, y0 + 15), GxEPD_BLACK)
-    // }
-
-    // display.drawRect(x0 + 30, y0 + 15, 106, 32, GxEPD_BLACK);
-  }
+  u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
+  u8g2Fonts.setForegroundColor(GxEPD_BLACK);
+  drawString(x0 + 2, y0 + 20, "max:");
+  drawString(x0 + 2, y0 + 35, "min:");
+  drawString(x0 + 30, y0 + 5, "ppm");
+  drawString(x0 + 73, y0 + 5, "°C");
+  drawString(x0 + 110, y0 + 5, "%");
+  char out13[10];
+  dtostrf(dbS["CO2_min"], 5, 0, out13);
+  drawString(x0 + 30, y0 + 35, out13);
+  dtostrf(dbS["CO2_max"], 5, 0, out13);
+  drawString(x0 + 30, y0 + 20, out13);
+  dtostrf(dbS["Temp_BME280_min"], 5, 1, out13);
+  drawString(x0 + 73, y0 + 35, out13);
+  dtostrf(dbS["Temp_BME280_max"], 5, 1, out13);
+  drawString(x0 + 73, y0 + 20, out13);
+  dtostrf(dbS["RH_BME280_min"], 4, 1, out13);
+  drawString(x0 + 110, y0 + 35, out13);
+  dtostrf(dbS["RH_BME280_max"], 4, 1, out13);
+  drawString(x0 + 110, y0 + 20, out13);
 
 
   display.drawRect(x0, y0, 138, 59, GxEPD_RED);
