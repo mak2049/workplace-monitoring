@@ -117,3 +117,9 @@ void MainWindow::onPresenceTimeUpdated(int seconds)
 }
 
 #endif
+
+void MainWindow::on_tableView_activated(const QModelIndex &index)
+{
+
+}
+

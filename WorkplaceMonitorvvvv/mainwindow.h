@@ -38,6 +38,7 @@ private:
 private slots:
     void onPresenceTimeUpdated(int seconds);
 
+    void on_tableView_activated(const QModelIndex &index);
 };
 
 #endif
