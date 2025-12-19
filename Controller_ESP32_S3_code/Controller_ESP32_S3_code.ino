@@ -20,9 +20,11 @@
 
 */
 //---------------WiFi------------
+
 #include <GyverDBFile.h>  // База данных
 #include <LittleFS.h>     // Автономное хранение
 #include <SettingsESP.h>  //Веб интерфейс
+//#include <GyverHTTP.h>   //HTTP Client. для передачи данных на сервер.
 //-------------------------------
 #include <SPI.h>
 #include <Wire.h>

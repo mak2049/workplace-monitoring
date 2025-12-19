@@ -14,7 +14,7 @@ DB_KEYS(
 void WiFI_TIC(void* pvParameters) {
   WiFi.mode(WIFI_AP_STA);
   sett.begin();
-  sett.setVersion("0.04.19.12.25"); // Отображение версии прошивки
+  sett.setVersion("0.07.19.12.25"); // Отображение версии прошивки
   sett.onBuild(build);
   db.begin();
   db.init(kk::wifi_ssid, "");
