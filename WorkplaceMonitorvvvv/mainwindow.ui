@@ -49,6 +49,20 @@
      <string>Калибровка</string>
     </property>
    </widget>
+   <widget class="QLabel" name="labelWorkTime">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>109</y>
+      <width>401</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Время за рабочим местом: 00:00:00
+</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

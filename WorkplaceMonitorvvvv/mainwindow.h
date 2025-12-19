@@ -34,6 +34,10 @@ private:
     MediaPipePose *pose;
     QSystemTrayIcon *trayIcon;
     QSoundEffect *alertSound;
+
+private slots:
+    void onPresenceTimeUpdated(int seconds);
+
 };
 
 #endif

@@ -1,3 +1,5 @@
+#pragma execution_character_set("utf-8")
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "mediapipe_pose.h"
@@ -33,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(pose, &MediaPipePose::badPostureCleared,
             this, &MainWindow::onBadPostureCleared);
+
+    connect(pose, &MediaPipePose::presenceTimeUpdated,
+            this, &MainWindow::onPresenceTimeUpdated);
+
 
     pose->start();
 
@@ -95,4 +101,19 @@ void MainWindow::embedOpenCVWindow()
                r.bottom - r.top,
                TRUE);
 }
+
+void MainWindow::onPresenceTimeUpdated(int seconds)
+{
+    int h = seconds / 3600;
+    int m = (seconds % 3600) / 60;
+    int s = seconds % 60;
+
+    ui->labelWorkTime->setText(
+        QString("%1:%2:%3")
+            .arg(h, 2, 10, QChar('0'))
+            .arg(m, 2, 10, QChar('0'))
+            .arg(s, 2, 10, QChar('0'))
+        );
+}
+
 #endif

@@ -6,7 +6,6 @@ import time
 import sys
 import threading
 
-# ================= НАСТРОЙКИ =================
 WINDOW_NAME = "Posture Monitor"
 
 SMOOTH_WINDOW = 5
@@ -14,15 +13,12 @@ ANGLE_DELTA = 8
 SHOULDER_DELTA = 12
 BAD_POSTURE_TIMEOUT = 5.0
 
-# ================= MediaPipe =================
 mp_pose = mp.solutions.pose
 mp_draw = mp.solutions.drawing_utils
 
-# ================= Буферы =================
 angle_buf = deque(maxlen=SMOOTH_WINDOW)
 shoulder_buf = deque(maxlen=SMOOTH_WINDOW)
 
-# ================= Состояние =================
 reference_angle = None
 reference_shoulder = None
 last_calibration_time = 0
@@ -34,8 +30,12 @@ bad_posture_start_time = None
 notification_sent = False
 calibrate_requested = False
 
+# ====== ВРЕМЯ ПРИСУТСТВИЯ ======
+presence_start_time = None
+total_presence_time = 0.0
+last_report_time = 0
 
-# ================= stdin (Qt → Python) =================
+
 def stdin_listener():
     global calibrate_requested
     while True:
@@ -49,7 +49,6 @@ def stdin_listener():
 threading.Thread(target=stdin_listener, daemon=True).start()
 
 
-# ================= ВСПОМОГАТЕЛЬНЫЕ =================
 def smooth(val, buf):
     buf.append(val)
     return sum(buf) / len(buf)
@@ -63,7 +62,6 @@ def calculate_angle(a, b, c):
     return np.degrees(np.arccos(np.clip(cos, -1.0, 1.0)))
 
 
-# ================= КАМЕРА =================
 cap = cv2.VideoCapture(0)
 cap.set(3, 640)
 cap.set(4, 480)
@@ -73,7 +71,6 @@ cv2.resizeWindow(WINDOW_NAME, 640, 480)
 
 print("WINDOW CREATED", flush=True)
 
-# ================= ОСНОВНОЙ ЦИКЛ =================
 with mp_pose.Pose(
     min_detection_confidence=0.6,
     min_tracking_confidence=0.6
@@ -84,14 +81,17 @@ with mp_pose.Pose(
         if not ret:
             break
 
+        now = time.time()
         h, w, _ = frame.shape
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         res = pose.process(rgb)
 
         status = "NO PERSON"
         color = (160, 160, 160)
+        person_present = False
 
         if res.pose_landmarks:
+            person_present = True
             lm = res.pose_landmarks.landmark
 
             ear = (int(lm[7].x*w), int(lm[7].y*h))
@@ -120,10 +120,10 @@ with mp_pose.Pose(
                     color = (0, 0, 255)
 
                     if bad_posture_start_time is None:
-                        bad_posture_start_time = time.time()
+                        bad_posture_start_time = now
                         notification_sent = False
 
-                    if (time.time() - bad_posture_start_time >= BAD_POSTURE_TIMEOUT
+                    if (now - bad_posture_start_time >= BAD_POSTURE_TIMEOUT
                             and not notification_sent):
                         print("NOTIFY_BAD_POSTURE", flush=True)
                         notification_sent = True
@@ -138,11 +138,27 @@ with mp_pose.Pose(
                     bad_posture_start_time = None
                     notification_sent = False
 
-        # ---------- КАЛИБРОВКА ----------
+        # ===== ПОДСЧЁТ ВРЕМЕНИ =====
+        if person_present:
+            if presence_start_time is None:
+                presence_start_time = now
+        else:
+            if presence_start_time is not None:
+                total_presence_time += now - presence_start_time
+                presence_start_time = None
+
+        if now - last_report_time >= 1:
+            total = total_presence_time
+            if presence_start_time:
+                total += now - presence_start_time
+            print(f"PRESENCE_TIME {int(total)}", flush=True)
+            last_report_time = now
+
+        # ===== КАЛИБРОВКА =====
         if calibrate_requested and current_angle is not None:
             reference_angle = current_angle
             reference_shoulder = current_shoulder
-            last_calibration_time = time.time()
+            last_calibration_time = now
             calibrate_requested = False
 
         cv2.putText(frame, status, (30, 40),

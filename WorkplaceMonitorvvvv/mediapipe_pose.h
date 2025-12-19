@@ -15,6 +15,7 @@ public:
 signals:
     void badPostureDetected();
     void badPostureCleared();
+    void presenceTimeUpdated(int seconds);
 
 private:
     QProcess process;

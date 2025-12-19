@@ -1,3 +1,5 @@
+#pragma execution_character_set("utf-8")
+
 #include "mediapipe_pose.h"
 #include <QDebug>
 
@@ -10,29 +12,30 @@ void MediaPipePose::start()
 {
     process.setProcessChannelMode(QProcess::MergedChannels);
 
-    connect(&process, &QProcess::readyRead, this, [&]() {
-        QByteArray data = process.readAll();
-        qDebug().noquote() << data;
+    connect(&process, &QProcess::readyReadStandardOutput,
+            this, [this]() {
 
-        if (data.contains("NOTIFY_BAD_POSTURE"))
-            emit badPostureDetected();
+                while (process.canReadLine()) {
+                    QString line = QString::fromUtf8(process.readLine()).trimmed();
 
-        if (data.contains("CLEAR_BAD_POSTURE"))
-            emit badPostureCleared();
-    });
+                    if (line == "NOTIFY_BAD_POSTURE")
+                        emit badPostureDetected();
+                    else if (line == "CLEAR_BAD_POSTURE")
+                        emit badPostureCleared();
+                    else if (line.startsWith("PRESENCE_TIME")) {
+                        emit presenceTimeUpdated(line.split(' ')[1].toInt());
+                    }
+                }
+            });
 
     process.start(
         "C:/Users/Admin/AppData/Local/Programs/Python/Python310/python.exe",
         { "C:/Qt/my_project/WorkplaceMonitorvvvv/mp_pose_stdout.py" }
         );
-
-    process.waitForStarted();
 }
 
 void MediaPipePose::sendCalibrate()
 {
-    if (process.state() == QProcess::Running) {
+    if (process.state() == QProcess::Running)
         process.write("CALIBRATE\n");
-        qDebug() << "CALIBRATE sent";
-    }
 }

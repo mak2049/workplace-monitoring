@@ -1,1 +1,0 @@
-OpenCV:    https://sourceforge.net/projects/opencvlibrary/files/4.12.0/
